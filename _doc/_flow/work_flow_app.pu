@@ -1,0 +1,22 @@
+@startuml work_flow_app
+title Web-App間 作業フロー
+|web| Web
+|app| App
+
+|web|
+start
+:実装&テスト;
+:ステージング環境 反映;
+|app|
+:実装&テスト;
+|web|
+:本番環境 メンテナンスモード;
+:本番環境 反映;
+|app|
+:ストアアプリ アップデート;
+:動作確認;
+|web|
+:本番環境 メンテナンスモード解除;
+stop
+@enduml
+

@@ -1,0 +1,25 @@
+.bl_msg {
+    position: relative;
+    max-width: map-get($ary_width, s);
+    margin: 2rem auto;
+    padding: 1.2rem 3rem;
+    background: #fff;
+    box-shadow: 0 0 6px 0px rgba(0, 0, 0, 0.4);
+    box-sizing: border-box;
+    &::before {
+        content: "";
+        bottom: 0.5rem;
+        right: 0.5rem;
+        border-top: 1.7rem solid transparent;
+        border-right: 1.7rem solid $color_main;
+        position: absolute;
+    }
+    p {
+        text-align: center;
+        font-weight: bold;
+        font-size: 1.2rem;
+        &.el_red {
+            color: red;
+        }
+    }
+}

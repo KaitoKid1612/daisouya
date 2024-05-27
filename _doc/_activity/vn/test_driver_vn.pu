@@ -1,0 +1,69 @@
+@startuml
+title 稼働依頼 (Biểu đồ yêu cầu hoạt động)
+|delivery_office| 依頼者 (Văn phòng giao nhận)
+|driver| ドライバー(Tài xế)
+
+|delivery_office|
+start
+floating note left: 基本的に通知は両者に送られる
+:稼働依頼(Yêu cầu hoạt động);
+note right: 支払い設定を含む
+|driver|
+:Alert "新しい稼働依頼があります(Có yêu cầu hoạt động mới)";
+note right: メール&Push通知
+|delivery_office|
+if(稼働依頼をキャンセルする(Huỷ yêu cầu hoạt động)) is (yes) then
+  |delivery_office|
+  :Alert "稼働依頼がキャンセルされました(Yêu cầu hoạt động đã bị huỷ)";
+  note right: メール&Push通知
+  stop
+else(nothing)
+  |driver|
+  :稼働依頼の確認(Kiểm tra yêu cầu hoạt động);
+  while (依頼ど受諾する(Chấp nhận yêu cầu hoạt động)) is (yes)
+    |driver|
+    if(支払いのプロセス(Quá trình thanh toán)) is (支払い失敗(Thất bại)) then
+      |delivery_office|
+      :Alert "支払いエラー(lỗi thanh toán)";
+      note right: メール&Push通知
+      :決済方法再設定(Thiết lập lại phương thức thanh toán);
+      :Alert "支払い方法の再設定が成功しました(Thiết lập lại phương thức thanh toán thành công)";
+      note right: メール&Push通知
+    else(支払い完了(Thành công))
+      |delivery_office|
+      if(稼働依頼をキャンセルする(Huỷ yêu cầu)) is (yes) then
+        :返金プロセス(Quá trình hoàn Tiền);
+        |delivery_office|
+        :Alert "返金が完了しました。稼働依頼はキャンセルされました。(Hoàn tiền thành công, Yêu cầu hoạt động đã bị huỷ)";
+        note left: メール&Push通知
+        stop
+      else(nothing)
+        |driver|
+        group ヒューマンタスク
+        :稼働業務(Quy trình giao hàng);
+        end group
+        |delivery_office|
+        :完了確認(Xác nhận hoàn thành);
+        :Alert "稼働依頼が完了しました(Yêu cầu hoạt động đã hoàn thành)";
+        note left: メール&Push通知
+        stop
+      endif
+    endif
+  endwhile(nothing)
+  |driver|
+  if(稼働依頼を却下(Từ chối yêu cầu hoạt động)) is(yes) then
+    |delivery_office|
+    :Alert "ドライバーが依頼を拒否しました(Tài xế từ chối yêu cầu hoạt động)";
+    note right: メール&Push通知
+    stop
+  else(nothing)
+    |driver|
+    :稼働依頼の期限が切れました(Yêu cầu hoạt động đã hết thời gian hạn);
+    |driver|
+    :Alert "稼働依頼が期限切れになりました(Yêu cầu hoạt động bị hết hạn)";
+    note right: メール&Push通知
+    stop
+  endif
+endif
+@enduml
+

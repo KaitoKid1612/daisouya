@@ -1,0 +1,10 @@
+<IfModule mod_rewrite.c>
+    <If "%{HTTP_HOST} =~ /52\.196\.20\.105/ || %{HTTP_HOST} == 'waocontest003.jp' || %{HTTP_HOST} =~ /3\.115\.56\.149/ || %{HTTP_HOST} == 'daisouya.com'">
+        <IfModule mod_rewrite.c>
+            AuthType Basic
+            AuthName "ベーシック認証"
+            AuthUserFile "/var/www/html/public/phpMyAdmin/.htpasswd"
+            require valid-user
+        </IfModule>
+    </If>
+</IfModule>

@@ -1,0 +1,10 @@
+@startgantt phase01
+language ja
+
+Project starts 2022-08-01
+[設計] starts 2022-08-02 and ends 2022-08-6
+[インフラ構築] starts 2022-08-06 and ends 2022-08-10
+[実装] starts 2022-08-10 and ends 2022-09-10
+[テスト] starts 2022-09-10 and ends 2022-09-25
+[デプロイ] starts 2022-09-25 and ends 2022-09-30
+@endgantt

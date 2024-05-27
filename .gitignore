@@ -1,0 +1,57 @@
+/node_modules
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+.env
+.env.backup
+.env.*
+.phpunit.result.cache
+docker-compose.override.yml
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+/.idea
+
+storage
+
+# PHPDoc。各自生成すれば良いのでいらない。
+_phpdoc
+
+.DS_Store
+._.DS_Store
+
+# コンパイルするのでいらない。
+public/css/app.css
+public/css/app_admin.css
+public/css/app_driver.css
+public/css/app_delivery_office.css
+public/css/app_admin.css.map
+public/css/app_driver.css.map
+public/css/app_delivery_office.css.map
+public/css/app_guest.css
+public/css/app_guest.css.map
+public/js/app.js
+public/js/app.js.map
+public/js/app.js.LICENSE.txt
+public/js/app_admin.js
+public/js/app_admin.js.map
+public/js/app_delivery_office.js
+public/js/app_delivery_office.js.map
+public/js/app_admin.js.LICENSE.txt
+public/js/app_driver.js
+public/js/app_driver.js.map
+public/js/app_driver.js.LICENSE.txt
+public/js/typescript.js
+
+
+public/phpMyAdmin/tmp/twig/*
+
+# テストする際に利用するが、存在しなければ生成されるので。
+tests/Unit/Api/DeliveryOffice/api_token.txt
+
+
+# ディープリンクの設定ファイル
+public/apple-app-site-association
+public/assetlinks.json

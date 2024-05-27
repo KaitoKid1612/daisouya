@@ -1,0 +1,528 @@
+# vscode shift + option + p
+openapi: "3.0.0"
+
+info:
+  title: "その他のAPI"
+  license:
+    name: "MIT License"
+    url: "https://opensource.org/licenses/MIT"
+  version: "1.0.0"
+
+servers:
+  - url: "http://localhost:{port}/api/guest"
+    description: "ローカル"
+    variables:
+      port:
+        description: "ポート番号"
+        enum: ["8000", "48000"]
+        default: "48000"
+  - url: "https://waocontest003.jp/api/guest"
+    description: "ステージング"
+
+tags:
+  - name: "terms"
+    description: "規約系"
+  - name: "status"
+    description: "ステータス"
+  - name: "type"
+    description: "タイプ"
+  - name: "contact"
+    description: "お問合せ"
+  - name: "other"
+    description: "その他"
+
+paths:
+  # --規約系--
+  /terms-service:
+    get:
+      summary: 利用規約
+      tags: ["terms"]
+      parameters:
+        - name: type
+          description: "タイプ office か driver を指定する"
+          in: query
+          required: false
+          schema: { type: string }
+        - name: is_html
+          description: "html形式で返すか。0:テキスト 1: html"
+          in: query
+          required: false
+          schema: { type: integer }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  /commerce-law:
+    get:
+      summary: 特定商取引法に基づく表記
+      tags: ["terms"]
+      parameters:
+        - name: type
+          description: "タイプ office か driver を指定する"
+          in: query
+          required: false
+          schema: { type: string }
+        - name: is_html
+          description: "html形式で返すか。0:テキスト 1: html"
+          in: query
+          required: false
+          schema: { type: integer }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  /privacy-policy:
+    get:
+      summary: プライバシーポリシー
+      tags: ["terms"]
+      parameters:
+        - name: type
+          description: "タイプ office か driver を指定する"
+          in: query
+          required: false
+          schema: { type: string }
+        - name: is_html
+          description: "html形式で返すか。0:テキスト 1: html"
+          in: query
+          required: false
+          schema: { type: integer }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  # --ステータス--
+  /driver-task-status:
+    get:
+      summary: 稼働依頼ステータス 一覧
+      tags: ["status"]
+      parameters:
+        - name: style
+          description: "スタイル 「form」は`指定なし`を含む"
+          in: query
+          required: true
+          schema: { type: integer }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  /driver-task-status/show/{status_id}:
+    get:
+      summary: 稼働依頼ステータス 取得
+      tags: ["status"]
+      parameters:
+        - name: status_id
+          description: "ステータスID"
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  /driver-task-payment-status:
+    get:
+      summary: 稼働依頼支払いステータス
+      tags: ["status"]
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  /driver-task-payment-status/show/{status_id}:
+    get:
+      summary: 稼働依頼支払いステータス 取得
+      tags: ["status"]
+      parameters:
+        - name: status_id
+          description: "ステータスID"
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  /driver-task-refund-status:
+    get:
+      summary: 稼働依頼返金ステータス 一覧
+      tags: ["status"]
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  /driver-task-refund-status/show/{status_id}:
+    get:
+      summary: 稼働依頼返金ステータス 取得
+      tags: ["status"]
+      parameters:
+        - name: status_id
+          description: "ステータスID"
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  /delivery-office-task-review-public-status:
+    get:
+      summary: 依頼者へのレビュー公開ステータス
+      tags: ["status"]
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  /delivery-office-task-review-public-status/show/{status_id}:
+    get:
+      summary: 依頼者へのレビュー公開ステータス 取得
+      tags: ["status"]
+      parameters:
+        - name: status_id
+          description: "ステータスID"
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  /driver-task-review-public-status:
+    get:
+      summary: ドライバーへのレビュー公開ステータス
+      tags: ["status"]
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  /driver-task-review-public-status/show/{status_id}:
+    get:
+      summary: ドライバーへのレビュー公開ステータス 取得
+      tags: ["status"]
+      parameters:
+        - name: status_id
+          description: "ステータスID"
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  /register-request-status:
+    get:
+      summary: 登録申請ステータス 一覧
+      tags: ["status"]
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  /register-request-status/show/{status_id}:
+    get:
+      summary: 登録申請ステータス 取得
+      tags: ["status"]
+      parameters:
+        - name: type_id
+          description: "タイプID"
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  # --タイプ--
+  /user-type:
+    get:
+      summary: ユーザ種類 一覧
+      tags: ["type"]
+      parameters:
+        - name: id_list
+          description: "user_type ID"
+          in: query
+          required: true
+          schema: { type: array }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  /user-type/show/{type_id}:
+    get:
+      summary: ユーザ種類 取得
+      tags: ["type"]
+      parameters:
+        - name: type_id
+          description: "タイプID"
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  /delivery-office-type:
+    get:
+      summary: 依頼者の種類 一覧
+      tags: ["type"]
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  /delivery-office-type/show/{type_id}:
+    get:
+      summary: 依頼者の種類 取得
+      tags: ["type"]
+      parameters:
+        - name: type_id
+          description: "タイプID"
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  /delivery-office-charge-user-type:
+    get:
+      summary: 請求に関するユーザの種類 一覧
+      tags: ["type"]
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  /delivery-office-charge-user-type/show/{type_id}:
+    get:
+      summary: 請求に関するユーザの種類 取得
+      tags: ["type"]
+      parameters:
+        - name: type_id
+          description: "タイプID"
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  /web-contact-type:
+    get:
+      summary: お問い合わせタイプ 一覧
+      tags: ["type"]
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  /web-contact-type/show/{type_id}:
+    get:
+      summary: お問い合わせタイプ 取得
+      tags: ["type"]
+      parameters:
+        - name: type_id
+          description: "タイプID"
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  # --お問合せ--
+  /web-contact/store:
+    post:
+      tags: ["contact"]
+      summary: "作成"
+      parameters:
+        - $ref: "#/components/parameters/api_auth"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                user_type_id:
+                  type: integer
+                name_sei:
+                  type: string
+                name_mei:
+                  type: string
+                name_sei_kana:
+                  type: string
+                name_mei_kana:
+                  type: string
+                email:
+                  type: string
+                tel:
+                  type: string
+                web_contact_type_id:
+                  type: integer
+                title:
+                  type: string
+                text:
+                  type: string
+                type:
+                  type: string
+      responses:
+        200:
+          $ref: "#/components/responses/200_W"
+
+  /region:
+    get:
+      summary: 地方 一覧
+      tags: ["other"]
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  /region/show/{region_id}:
+    get:
+      summary: 地方 取得
+      tags: ["other"]
+      parameters:
+        - name: region_id
+          description: "地方ID"
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  /prefecture:
+    get:
+      summary: 都道府県 一覧
+      tags: ["other"]
+      parameters:
+        - name: style
+          description: "スタイル 「form」は`指定なし`を含む"
+          in: query
+          required: true
+          schema: { type: string }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  /prefecture/show/{prefecture_id}:
+    get:
+      summary: 都道府県 取得
+      tags: ["other"]
+      parameters:
+        - name: prefecture_id
+          description: "都道府県ID"
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  /gender:
+    get:
+      summary: 性別
+      tags: ["other"]
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  /delivery-company:
+    get:
+      summary: 配送会社 一覧
+      tags: ["other"]
+      parameters:
+        - name: type
+          description: "タイプ 「other」ならその他、「belong」なら所属なしの要素が末尾につく"
+          in: query
+          required: true
+          schema: { type: string }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  /delivery-company/show/{company_id}:
+    get:
+      summary: 配送会社 取得
+      tags: ["other"]
+      parameters:
+        - name: company_id
+          description: "配送会社ID"
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  /review-score:
+    get:
+      summary: レビュー評価点
+      tags: ["other"]
+      parameters:
+        - name: type
+          description: "タイプ 「standard」は標準、「from_avg」はfromフォーム用、「to_avg」はtoフォーム用 を指定する"
+          in: query
+          required: true
+          schema: { type: string }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  /allow-path/driver-waiting:
+    get:
+      summary: 登録審査中ドライバーのアクセス許可のパス 一覧
+      tags: ["other"]
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  /web-match-pattern:
+    get:
+      summary: 文字列のマッチパターンの方法
+      tags: ["other"]
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  /driver-task-plan:
+    get:
+      summary: 稼働依頼プラン
+      tags: ["other"]
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  /driver-plan:
+    get:
+      summary: ドライバープラン
+      tags: ["other"]
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+components:
+  parameters:
+    api_auth:
+      in: header
+      name: Authorization
+      schema:
+        type: string
+      description: Authorization Bearer token
+
+  responses:
+    200_R:
+      description: "Success Read"
+      content:
+        application/json:
+          schema:
+            properties:
+              status: { type: boolean }
+              data: { type: object }
+    200_W:
+      description: "Success Write"
+      content:
+        application/json:
+          schema:
+            properties:
+              status: { type: boolean }
+              message: { type: string }
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

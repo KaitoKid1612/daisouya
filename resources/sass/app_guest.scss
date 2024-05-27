@@ -1,0 +1,52 @@
+@import "common/init/normalize";
+@import "common/init/reset";
+@import "guest/init/init";
+@import "common/mixin/variable";
+@import "common/mixin/media";
+@import "common/utility/font";
+
+body {
+    margin: 0;
+    display: flex;
+    flex-flow: column;
+    min-height: 100vh;
+    background-image: url(/images/common/bg.png);
+    background-repeat: repeat-y;
+    background-size: 100% auto;
+    @include z(bg);
+    width: 100%;
+}
+
+main {
+    margin-bottom: 2em;
+}
+
+.el_error_msg {
+    color: #ff0000;
+    margin: 0.2rem 0;
+    font-weight: bold;
+    width: 100%;
+}
+.el_textAlign_center {
+    text-align: center;
+}
+
+@import "common/pagenate";
+@import "common/overlay";
+
+@import "common/component/form";
+@import "common/component/loading";
+@import "common/block/other";
+
+@import "guest/block/header";
+@import "guest/block/footer";
+@import "guest/block/msg";
+@import "guest/block/web_contact";
+@import "guest/block/terms_service";
+
+// @import "guest/block/login";
+// @import "guest/block/dashboard";
+
+// @import "guest/block/export";
+// @import "guest/block/pdf_invoice";
+// @import "guest/block/crud";

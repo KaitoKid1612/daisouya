@@ -1,0 +1,166 @@
+<?php
+
+namespace Tests\Unit\Api\Normal\Driver;
+
+// use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
+
+use Illuminate\Support\Facades\Storage;
+use App\Libs\Test\TestDoc;
+use App\Libs\Test\TestConfig;
+
+/**
+ * 依頼者レビュー ユニットテスト
+ */
+class DeliveryOfficeTaskReviewTest extends TestCase
+{
+
+    private $section = "依頼者レビュー";
+
+    /**
+     * 一覧
+     * 正常値テスト
+     */
+    public function testIndex()
+    {
+        echo "\n" . __METHOD__ . "\n\n";
+
+        $testConfig = new TestConfig();
+        $token_path = $testConfig->getDriverApiTokenPath();
+        $api_token = Storage::disk("private")->get($token_path);
+        $headers = $testConfig->getRequestHeaders([
+            "Authorization" => $api_token
+        ]);
+
+        $query_param = [
+            "driver_id" => 1,
+        ];
+        $query_text = "?" . http_build_query($query_param);
+
+        $url = "/api/driver/delivery-office-task-review" . $query_text;
+        $response = $this->getJson($url, $headers);
+
+        $test_result = '';
+        if ($response->getStatusCode() === 200) {
+            $test_result = true;
+        } else {
+            $test_result = false;
+        }
+        $response->assertStatus(200);
+
+        $response_body = json_decode($response->getContent());
+        $api_status = $response_body->status;
+        $this->assertTrue($api_status, $message = "APIステータスがTrueではない!");
+
+        $request = $this->app['request'];
+
+        $testDoc = new TestDoc();
+        $testDoc->createCSVDriverAPI(
+            $this->section,
+            __CLASS__,
+            __FUNCTION__,
+            $request,
+            $response,
+            $test_result
+        );
+    }
+
+    /**
+     * 作成
+     * 正常値テスト
+     */
+    public function testStore()
+    {
+        echo "\n" . __METHOD__ . "\n\n";
+
+        $testConfig = new TestConfig();
+        $token_path = $testConfig->getDriverApiTokenPath();
+        $api_token = Storage::disk("private")->get($token_path);
+        $headers = $testConfig->getRequestHeaders([
+            "Authorization" => $api_token
+        ]);
+
+        $query_param = [];
+        $query_text = "?" . http_build_query($query_param);
+
+        $request_body = [
+            "driver_task_id" => 10,
+            "title" => "UnitタイトルAPI",
+            "score" => 4,
+            "text" => "UnitテキストAPI"
+        ];
+
+        $url = "/api/driver/delivery-office-task-review/store" . $query_text;
+        $response = $this->postJson($url, $request_body,  $headers);
+
+        $test_result = '';
+        if ($response->getStatusCode() === 200) {
+            $test_result = true;
+        } else {
+            $test_result = false;
+        }
+        $response->assertStatus(200);
+
+        $response_body = json_decode($response->getContent());
+        $api_status = $response_body->status;
+        $this->assertTrue($api_status, $message = "APIステータスがTrueではない!");
+
+        $request = $this->app['request'];
+
+        $testDoc = new TestDoc();
+        $testDoc->createCSVDriverAPI(
+            $this->section,
+            __CLASS__,
+            __FUNCTION__,
+            $request,
+            $response,
+            $test_result
+        );
+    }
+
+    /**
+     * 取得
+     * 正常値テスト
+     */
+    public function testShow()
+    {
+        echo "\n" . __METHOD__ . "\n\n";
+
+        $testConfig = new TestConfig();
+        $token_path = $testConfig->getDriverApiTokenPath();
+        $api_token = Storage::disk("private")->get($token_path);
+        $headers = $testConfig->getRequestHeaders([
+            "Authorization" => $api_token
+        ]);
+
+        $query_param = [];
+        $query_text = "?" . http_build_query($query_param);
+
+        $url = "/api/driver/delivery-office-task-review/show/3" . $query_text;
+        $response = $this->getJson($url, $headers);
+
+        $test_result = '';
+        if ($response->getStatusCode() === 200) {
+            $test_result = true;
+        } else {
+            $test_result = false;
+        }
+        $response->assertStatus(200);
+
+        $response_body = json_decode($response->getContent());
+        $api_status = $response_body->status;
+        $this->assertTrue($api_status, $message = "APIステータスがTrueではない!");
+
+        $request = $this->app['request'];
+
+        $testDoc = new TestDoc();
+        $testDoc->createCSVDriverAPI(
+            $this->section,
+            __CLASS__,
+            __FUNCTION__,
+            $request,
+            $response,
+            $test_result
+        );
+    }
+}

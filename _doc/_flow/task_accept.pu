@@ -1,0 +1,25 @@
+@startuml task_accept
+left to right direction
+
+title 稼働依頼 (受諾)
+
+actor "ドライバー(スタート)" as driver
+actor "依頼者" as delivery_office
+rectangle "受諾処理" as task_accept
+
+rectangle pay [
+  決済
+]
+
+rectangle resetting [
+  クレカ再設定
+]
+
+
+driver --> task_accept
+task_accept --> pay : 成功
+task_accept --> delivery_office : 決済失敗
+delivery_office --> resetting
+resetting -> driver
+
+@enduml

@@ -1,0 +1,36 @@
+{
+    "editor.wordWrapColumn": 300,
+    "editor.wordWrap": "bounded",
+    "files.eol": "\n",
+    "beautify.options": {},
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "js/ts.implicitProjectConfig.module": "ES2015",
+    "js/ts.implicitProjectConfig.target": "ES2015",
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "html.format.enable": false,
+    "javascript.format.enable": false,
+    "bladeFormatter.format.indentSize": 2,
+    "bladeFormatter.format.wrapLineLength": 300,
+    "bladeFormatter.format.wrapAttributes": "preserve",
+    "html.format.wrapAttributes": "preserve",
+    "prettier.tabWidth": 2,
+    "[scss]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[yaml]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+    "search.exclude": {
+        "node_modules": true,
+        "public/phpMyAdmin": true,
+        "vendor": true,
+        "storage/debugbar": true
+    }
+}

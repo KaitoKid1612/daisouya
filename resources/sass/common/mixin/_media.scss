@@ -1,0 +1,118 @@
+.el_hidden {
+    display: none;
+}
+
+/* メディアクエリ */
+$breakpoints: (
+    // 細いスマホ以上
+    xxs: "only screen and (min-width: 320px)",
+    // 標準スマホ以上
+    xs: "only screen and (min-width: 480px)",
+    // 幅小さめタブレット&スマホ横向き以上
+    s: "only screen and (min-width: 600px)",
+    // ipad以上
+    m: "only screen and (min-width: 768px)",
+    // 幅小さめノートPC以上
+    l: "only screen and (min-width: 1024px)",
+    // HD以上
+    xl: "only screen and (min-width: 1280px)",
+    // macbook air
+    xxl: "only screen and (min-width: 1440px)",
+    // FHD以上
+    xxxl: "only screen and (min-width: 1920px)"
+);
+
+@mixin media($breakpoint) {
+    @if map-has-key($breakpoints, $breakpoint) {
+        @media #{map-get($breakpoints, $breakpoint)} {
+            @content;
+        }
+    } @else {
+        @error "$breakpoints に #{$breakpoint} ってキーは無いよ！";
+    }
+}
+
+/* z-index */
+$ary_z: (
+    loading: 100000,
+    modal: 9999,
+    menu_btn: 3000,
+    drawer: 2500,
+    header: 1000,
+    sidebar: 750,
+    overlay: 500,
+    up: 50,
+    //デフォルトより上層にしたい用
+    default: 1,
+    bg: -1000,
+);
+
+@mixin z($key) {
+    z-index: map-get($ary_z, $key);
+}
+
+/* width */
+$ary_width: (
+    xs: 480px,
+    s: 600px,
+    m: 768px,
+    l: 1024px,
+    xl: 1280px,
+    xxl: 1440px,
+    xxxl: 1920px,
+);
+
+//width rem ループで作成
+$width: 80;
+@while $width > 0 {
+    $point: ($width - floor($width));
+    $num:'';
+    @if $point == 0{
+        $num: "";
+    }
+     @else {
+        $num: _ + #{$point * 10};
+    }
+    .el_width#{floor($width)}#{$num}rem {
+        width: #{$width} + #{"rem"};
+    }
+    $width: $width - 0.5;
+}
+
+// max width rem ループで作成
+$max_width: 80;
+@while $max_width > 0 {
+    $point: ($max_width - floor($max_width));
+    $num:'';
+    @if $point == 0{
+        $num: "";
+    }
+     @else {
+        $num: _ + #{$point * 10};
+    }
+    .el_max_width#{floor($max_width)}#{$num}rem {
+        max-width: #{$max_width} + #{"rem"};
+    }
+    $max_width: $max_width - 0.5;
+}
+
+
+$font_size: 5;
+@while $font_size > 0 {
+    $point: ($font_size - floor($font_size));
+    $num:'';
+    @if $point == 0{
+        $num: "";
+    }
+     @else {
+        $num: _ + #{$point * 10};
+    }
+    .el_font#{floor($font_size)}#{$num}rem {
+        font-size: #{$font_size} + #{"rem"};
+    }
+    $font_size: $font_size - 0.1;
+}
+
+.el_margin_auto {
+    margin: auto;
+}

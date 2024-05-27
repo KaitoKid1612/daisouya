@@ -1,0 +1,261 @@
+.bl_registerRequestStore {
+    max-width: map-get($ary_width, m);
+    margin: 5rem auto 4rem auto;
+    background: #fff;
+    border: 1px solid #999899;
+    box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.2);
+    @include media(m) {
+        margin: 7rem auto 4rem auto;
+    }
+    .bl_registerRequestStore_inner {
+        position: relative;
+        width: 98%;
+        margin: auto;
+        padding-top: 5rem;
+        padding-bottom: 3rem;
+        @include media(m) {
+            width: 90%;
+        }
+        .bl_registerRequestStore_inner_head {
+            width: 96%;
+            box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            background: #fff;
+            padding: 1.2rem 1.5rem;
+            position: absolute;
+            top: 0%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-sizing: border-box;
+            .bl_registerRequestStore_inner_head_ttl {
+                width: 100%;
+                h2 {
+                    font-size: 1.3rem;
+                    span {
+                        font-size: 1rem;
+                    }
+                }
+            }
+        }
+        .bl_registerRequestStore_inner_content {
+            .bl_registerRequestStore_inner_content_msg {
+                border: 1px solid $color_line;
+                border-radius: 0.5rem;
+                position: relative;
+                padding: 2rem 1rem 2rem 1rem;
+                @include media(m) {
+                    padding: 2rem 3rem;
+                }
+                &::before {
+                    content: "";
+                    bottom: 0.5rem;
+                    right: 0.5rem;
+                    border-top: 1.7rem solid transparent;
+                    border-right: 1.7rem solid $color_main;
+                    position: absolute;
+                }
+                p {
+                    font-size: 1.2rem;
+                    text-align: center;
+                    font-weight: bold;
+                    line-height: 1.6rem;
+                    margin-bottom: 1rem;
+                    &.el_red {
+                        color: red;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.bl_registerRequestCreate {
+    max-width: map-get($ary_width, m);
+    margin: auto;
+    margin-top: 7rem;
+    margin-bottom: 4rem;
+    background: #fff;
+    border: 1px solid #999899;
+    box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.2);
+    .bl_registerRequestCreate_inner {
+        position: relative;
+        width: 98%;
+        margin: auto;
+        padding-top: 5rem;
+        padding-bottom: 3rem;
+        @include media(m) {
+            width: 90%;
+        }
+        .bl_registerRequestCreate_inner_head {
+            width: 96%;
+            box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            background: #fff;
+            padding: 1.2rem 1.5rem;
+            position: absolute;
+            top: 0%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-sizing: border-box;
+            .bl_registerRequestCreate_inner_head_ttl {
+                width: 100%;
+                h2 {
+                    font-size: 1.3rem;
+                    span {
+                        font-size: 1rem;
+                    }
+                }
+            }
+        }
+        .bl_registerRequestCreate_inner_content {
+            .bl_registerRequestCreate_inner_content_data {
+                border: 1px solid $color_line;
+                border-radius: 0.5rem;
+                position: relative;
+                margin-bottom: 3rem;
+                padding: 2rem 1rem 2rem 1rem;
+                @include media(m) {
+                    padding: 2rem 3rem;
+                }
+                &::before {
+                    content: "";
+                    bottom: 0.5rem;
+                    right: 0.5rem;
+                    border-top: 1.7rem solid transparent;
+                    border-right: 1.7rem solid $color_main;
+                    position: absolute;
+                }
+                .bl_registerRequestCreate_inner_content_data_form {
+                    .bl_registerRequestCreate_inner_content_data_form_caption {
+                        h3 {
+                            font-size: 1.3rem;
+                            margin: 2rem 0 1rem 0;
+                        }
+                    }
+                    .bl_registerRequestCreate_inner_content_data_form_item {
+                        margin-bottom: 1.2rem;
+                        &.el_submit {
+                            justify-content: center;
+                            input[type="submit"] {
+                                font-weight: bold;
+                                padding: 0.6rem 1rem;
+                                &.js_submit_disable {
+                                    opacity: 0.5;
+                                }
+                            }
+                        }
+                        &.el_terms_service {
+                            justify-content: center;
+                            label {
+                                font-size: 1rem;
+                            }
+                            .el_error_msg {
+                                text-align: center;
+                            }
+                        }
+                        &.el_width_half {
+                            width: 100%;
+                            @include media(m) {
+                                width: 48%;
+                                margin-right: auto;
+                            }
+                        }
+                        .el_width6rem {
+                            max-width: 6rem;
+                        }
+                    }
+                    .bl_registerRequestCreate_inner_content_data_form_link {
+                        margin-top: 2rem;
+                        text-align: center;
+                        a {
+                            font-size: 1rem;
+                            color: $color_link;
+                            text-decoration: underline;
+                        }
+                    }
+                    .bl_registerRequestCreate_inner_content_data_form_advice {
+                        p {
+                            text-align: center;
+                            color: red;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.bl_registerRequestEdit {
+    max-width: map-get($ary_width, m);
+    margin: auto;
+    margin-top: 7rem;
+    margin-bottom: 4rem;
+    background: #fff;
+    border: 1px solid #999899;
+    box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.2);
+    .bl_registerRequestEdit_inner {
+        position: relative;
+        width: 98%;
+        margin: auto;
+        padding-top: 5rem;
+        padding-bottom: 3rem;
+        @include media(m) {
+            width: 90%;
+        }
+        .bl_registerRequestEdit_inner_head {
+            width: 96%;
+            box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            background: #fff;
+            padding: 1.2rem 1.5rem;
+            position: absolute;
+            top: 0%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-sizing: border-box;
+            .bl_registerRequestEdit_inner_head_ttl {
+                width: 100%;
+                h2 {
+                    font-size: 1.3rem;
+                    span {
+                        font-size: 1rem;
+                    }
+                }
+            }
+        }
+        .bl_registerRequestEdit_inner_content {
+            border: 1px solid $color_line;
+            border-radius: 0.5rem;
+            position: relative;
+            padding: 3rem 1rem 3rem 1rem;
+            @include media(m) {
+                padding: 3rem;
+            }
+            &::before {
+                content: "";
+                bottom: 0.5rem;
+                right: 0.5rem;
+                border-top: 1.7rem solid transparent;
+                border-right: 1.7rem solid $color_main;
+                position: absolute;
+            }
+            form {
+                .bl_registerRequestEdit_inner_content_form {
+                    .bl_registerRequestEdit_inner_content_form_item {
+                        margin-bottom: 1rem;
+                    }
+                    .bl_registerRequestEdit_inner_content_form_item_submit {
+                        text-align: center;
+                        margin-top: 2rem;
+                    }
+                }
+            }
+        }
+    }
+}

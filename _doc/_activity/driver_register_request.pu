@@ -1,0 +1,57 @@
+@startuml
+title ドライバー 会員登録
+|driver| 依頼者
+|admin| 管理者
+
+|driver|
+start
+:依頼者 登録申請;
+|admin|
+:Alert "新規の登録申請があります";
+note right: 通知
+
+split
+  |admin|
+  :許可;
+  |driver|
+  :Alert "許可されました。";
+  note left: 通知
+  :メールのURLから、パスワード設定;
+  note left: アカウント作成
+  :会員登録完了;
+  stop
+split again
+  |admin|
+  :審査中;
+  if(審査状況) is (審査中) then
+    -[#blue]->
+    |driver|
+    :Alert "審査中"; 
+    note left: 通知
+    :メールのURLから、パスワード設定;
+    note left: アカウント作成
+    :会員登録完了(権限を制限);
+    stop
+  else (審査終了)
+    |admin|
+    if(登録申請の処理) is (許可) then
+      :通過。アカウント制限解除;
+      note left: 通知
+      stop
+    else (不可)
+      :アカウント削除;
+      note right: 通知
+      stop
+    endif
+  endif
+
+split again
+  |admin|
+  :不可;
+
+  |driver|
+  :Alert "不可となりました。";
+  note left: 通知
+  stop
+endsplit
+@enduml

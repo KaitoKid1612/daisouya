@@ -1,0 +1,47 @@
+@startuml network
+title ネットワーク図
+
+actor "user" as user
+
+frame "AWS" as aws  {
+    rectangle "Route53" as route53
+
+
+    frame "Tokyo Region" {
+        interface internetGateway
+
+
+        frame "VPC  10.0.0.0/16" {
+            rectangle "ELB" as elb
+
+            rectangle "Subnet" {
+                frame "Public Subnet 10.0.10.0/24" as publicSubnet {
+                    rectangle "EC2 Instance"
+                }
+                frame "Private Subnet 10.0.20.0/24" as privateSubnet {
+                    rectangle "RDS Aurora MySQL"
+                }
+            }
+
+        }
+    }
+}
+
+user -- route53
+route53 -- internetGateway
+internetGateway -- elb: "HTTPS"
+elb -- publicSubnet
+
+card supplement [
+ELBは常時SSL化のため設置。
+SSL証明書はAWS Certificate Manager (ACM)woriyou 
+省略しているが、<b>Public Subnet 10.0.21.0/24</b> が存在する
+----
+メールサーバーはSESを利用
+----
+CloudWatch で監視
+---
+S3の利用
+]
+
+@enduml

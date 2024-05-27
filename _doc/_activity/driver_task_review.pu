@@ -1,0 +1,17 @@
+@startuml
+title 依頼者がドライバーを評価する
+|delivery_office| 依頼者 
+
+start
+:レビューをする;
+note right
+    (完了 || 不履行) && (現在日 > 稼働日)
+    で活動要件がある場合に、表示されます
+end note
+if(( 完了  || 不履行) && (現在日 > 稼働日)) is (false) then
+    stop
+else(true)
+    :ドライバーの評価完了;
+    stop
+endif
+@enduml

@@ -1,0 +1,1108 @@
+# vscode shift + option + p
+openapi: "3.0.0"
+
+info:
+  title: "依頼者のAPI"
+  license:
+    name: "MIT License"
+    url: "https://opensource.org/licenses/MIT"
+  version: "1.0.0"
+
+servers:
+  - url: "http://localhost:{port}/api/delivery-office"
+    description: "ローカル"
+    variables:
+      port:
+        description: "ポート番号"
+        enum: ["8000", "48000"]
+        default: "48000"
+  - url: "https://waocontest003.jp/api/delivery-office"
+    description: "ステージング"
+
+tags:
+  - name: "api_auth"
+    description: "API認証"
+  - name: "auth"
+    description: "認証回り"
+  - name: "fcm"
+    description: "FCMデバイストークン"
+  - name: "user"
+    description: "ユーザ"
+  - name: "payment_config"
+    description: "決済設定"
+  - name: "driver"
+    description: "ドライバー"
+  - name: "driver_schedule"
+    description: "ドライバースケジュール"
+  - name: "driver_task_review"
+    description: "ドライバーのレビュー"
+  - name: "delivery_office_task_review"
+    description: "依頼者のレビュー"
+  - name: "task"
+    description: "稼働依頼"
+  - name: "permission"
+    description: "許可権限"
+  - name: "ui"
+    description: "UI"
+  - name: "delivery_pickup_addr"
+    description: "集荷先住所"
+  - name: "pdf_receipt"
+    description: "領収書PDF"
+  - name: "register_request"
+    description: "登録申請"
+
+paths:
+  # API認証
+  /token/store:
+    post:
+      summary: ログイン APIトークン作成して取得
+      tags: ["api_auth"]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - email
+                - password
+                - device_name
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+                device_name:
+                  type: string
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: string
+              example: 1|dr97s3gwHKBJDpTKz9WVn5tNsuMCCX65nwPiryDo
+
+  /token/destroy:
+    post:
+      summary: ログアウト APIトークン削除
+      tags: ["api_auth"]
+      parameters:
+        - $ref: "#/components/parameters/api_auth"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                device_name:
+                  type: string
+      responses:
+        200:
+          $ref: "#/components/responses/200_W"
+
+  # 認証回り
+  /forgot-password:
+    post:
+      summary: パスワード忘れ、再設定メール送信
+      tags: ["auth"]
+      requestBody:
+        content:
+          aapplication/json:
+            schema:
+              properties:
+                email:
+                  type: string
+      responses:
+        200:
+          $ref: "#/components/responses/200_W"
+
+  /reset-password:
+    post:
+      summary: パスワード忘れ、再設定
+      tags: ["auth"]
+      requestBody:
+        content:
+          aapplication/json:
+            schema:
+              properties:
+                token:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+                password_confirmation:
+                  type: string
+      responses:
+        200:
+          $ref: "#/components/responses/200_W"
+
+  #FCMデバイストークン
+  /fcm-device-token/upsert:
+    post:
+      summary: 作成
+      tags: ["fcm"]
+      parameters:
+        - $ref: "#/components/parameters/api_auth"
+      requestBody:
+        content:
+          aapplication/json:
+            schema:
+              required:
+                - device_name
+                - fcm_token
+              properties:
+                device_name:
+                  type: string
+                fcm_token:
+                  type: string
+      responses:
+        200:
+          $ref: "#/components/responses/200_W"
+
+  /fcm-device-token/show/{fcm_token}:
+    get:
+      summary: 取得
+      tags: ["fcm"]
+      parameters:
+        - $ref: "#/components/parameters/api_auth"
+        - name: fcm_token
+          description: "FCMトークン"
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  /fcm-device-token/destroy{fcm_token}:
+    post:
+      summary: 削除
+      tags: ["fcm"]
+      parameters:
+        - $ref: "#/components/parameters/api_auth"
+        - name: fcm_token
+          description: "FCMトークン"
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        200:
+          $ref: "#/components/responses/200_W"
+
+  # --ユーザ--
+  /user:
+    get:
+      summary: ログインユーザー情報 取得
+      tags: ["user"]
+      parameters:
+        - $ref: "#/components/parameters/api_auth"
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+          example:
+
+  /user/update:
+    post:
+      summary: ログインユーザー情報 更新
+      tags: ["user"]
+      parameters:
+        - $ref: "#/components/parameters/api_auth"
+      requestBody:
+        description: 条件によってバリデーションルールが変更される。
+        content:
+          application/json:
+            schema:
+              properties:
+                type:
+                  type: string
+                  description: "編集タイプ 'email', 'password', 'user'の編集の場合はそれぞれを値に指定する"
+                name:
+                  type: string
+                manager_name_sei:
+                  type: string
+                manager_name_mei:
+                  type: string
+                manager_name_sei_kana:
+                  type: string
+                manager_name_mei_kana:
+                  type: string
+                email:
+                  type: string
+                current_password:
+                  type: string
+                password:
+                  type: string
+                password__confirmation:
+                  type: string
+                delivery_company_id:
+                  type: integer
+                delivery_company_name:
+                  type: string
+                post_code1:
+                  type: string
+                post_code2:
+                  type: string
+                addr1_id:
+                  type: integer
+                addr2:
+                  type: string
+                addr3:
+                  type: string
+                addr4:
+                  type: string
+                manager_tel:
+                  type: string
+      responses:
+        200:
+          $ref: "#/components/responses/200_W"
+
+  # --決済設定--
+  /user/payment-config:
+    get:
+      summary: "一覧取得"
+      tags: ["payment_config"]
+      parameters:
+        - $ref: "#/components/parameters/api_auth"
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+          example:
+
+  /user/payment-config/store:
+    post:
+      summary: "支払い方法追加"
+      tags: ["payment_config"]
+      parameters:
+        - $ref: "#/components/parameters/api_auth"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - payment_method
+              properties:
+                payment_method:
+                  type: string
+      responses:
+        200:
+          $ref: "#/components/responses/200_W"
+
+  /user/payment-config/show/{payment_id}:
+    get:
+      summary: "取得"
+      tags: ["payment_config"]
+      parameters:
+        - $ref: "#/components/parameters/api_auth"
+        - name: payment_id
+          description: "支払いID"
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+          example:
+
+  /user/payment-config/destroy/{payment_id}:
+    post:
+      summary: "削除"
+      tags: ["payment_config"]
+      parameters:
+        - $ref: "#/components/parameters/api_auth"
+        - name: payment_id
+          description: "支払いID"
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        200:
+          $ref: "#/components/responses/200_W"
+
+  /user/payment-config/customer/show:
+    get:
+      summary: "customer 取得"
+      tags: ["payment_config"]
+      parameters:
+        - $ref: "#/components/parameters/api_auth"
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+          example:
+
+  /user/payment-config/payment-method/store:
+    post:
+      summary: "支払い方法 作成"
+      tags: ["payment_config"]
+      parameters:
+        - $ref: "#/components/parameters/api_auth"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - number
+                - exp_month
+                - exp_year
+                - cvc
+              properties:
+                number:
+                  type: string
+                exp_month:
+                  type: string
+                exp_year:
+                  type: string
+                cvc:
+                  type: string
+      responses:
+        200:
+          $ref: "#/components/responses/200_W"
+
+  # --ドライバ--
+  /driver:
+    get:
+      summary: "一覧取得"
+      tags: ["driver"]
+      parameters:
+        - $ref: "#/components/parameters/api_auth"
+        - name: page
+          description: "ページ番号"
+          in: query
+          required: false
+          schema: { type: integer }
+        - name: keyword
+          description: "検索ワード"
+          in: query
+          required: false
+          schema: { type: string }
+        - name: driver_task_plan_id
+          description: "稼働依頼プランID"
+          in: query
+          required: false
+          schema: { type: integer }
+        - name: gender_id
+          description: "性別"
+          in: query
+          required: false
+          schema: { type: integer }
+        - name: addr1_id
+          description: "都道府県ID"
+          in: query
+          required: false
+          schema: { type: integer }
+        - name: from_age
+          description: "何歳~"
+          in: query
+          required: false
+          schema: { type: integer }
+        - name: to_age
+          description: "~何歳"
+          in: query
+          required: false
+          schema: { type: integer }
+        - name: from_review_avg_score
+          description: "レビュー平均評価点 以上"
+          in: query
+          required: false
+          schema: { type: integer }
+        - name: to_review_avg_score
+          description: "レビュー平均評価点 以下"
+          in: query
+          required: false
+          schema: { type: integer }
+        - name: from_task_count
+          description: "稼働数 以上"
+          in: query
+          required: false
+          schema: { type: integer }
+        - name: to_task_count
+          description: "稼働数 以下"
+          in: query
+          required: false
+          schema: { type: integer }
+        - name: orderby
+          description: "並び替え"
+          in: query
+          required: false
+          schema: { type: string }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  /driver/show/{driver_id}:
+    get:
+      summary: "取得"
+      tags: ["driver"]
+      parameters:
+        - $ref: "#/components/parameters/api_auth"
+        - name: driver_id
+          description: "ドライバID"
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  # ドライバースケジュール
+  /driver/driver-schedule:
+    get:
+      summary: "取得"
+      tags: ["driver_schedule"]
+      parameters:
+        - $ref: "#/components/parameters/api_auth"
+        - name: driver_id
+          description: "ドライバID"
+          in: query
+          required: true
+          schema: { type: integer }
+        - name: available_date_from
+          description: "稼働可能日 from"
+          in: query
+          schema: { type: string }
+        - name: available_date_to
+          description: "稼働可能日 to"
+          in: query
+          schema: { type: string }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+          example:
+
+  # --ドライバーレビュー--
+  /driver-task-review:
+    get:
+      summary: 一覧取得
+      tags: ["driver_task_review"]
+      parameters:
+        - $ref: "#/components/parameters/api_auth"
+        - name: page
+          description: "ページ番号"
+          in: query
+          required: false
+          schema: { type: integer }
+        - name: type
+          description: "`all`を指定すると全て取得"
+          in: query
+          required: false
+          schema: { type: string }
+        - name: driver_id
+          description: "ドライバーIDで絞り込む"
+          in: query
+          required: false
+          schema: { type: string }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  /driver-task-review/store:
+    post:
+      summary: "作成"
+      tags: ["driver_task_review"]
+      parameters:
+        - $ref: "#/components/parameters/api_auth"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - driver_task_id
+                - score
+              properties:
+                driver_task_id:
+                  type: integer
+                score:
+                  type: integer
+                title:
+                  type: string
+                text:
+                  type: string
+      responses:
+        200:
+          $ref: "#/components/responses/200_W"
+
+  /driver-task-review/show/{review_id}:
+    get:
+      summary: "取得"
+      tags: ["driver_task_review"]
+      parameters:
+        - $ref: "#/components/parameters/api_auth"
+        - name: review_id
+          description: "レビューID"
+          in: path
+          required: false
+          schema: { type: integer }
+        - name: driver_task_id
+          description: "稼働ID"
+          in: query
+          required: false
+          schema: { type: integer }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+          example:
+
+  # --依頼者レビュー--
+  /delivery-office-task-review:
+    get:
+      summary: "一覧取得"
+      tags: ["delivery_office_task_review"]
+      parameters:
+        - $ref: "#/components/parameters/api_auth"
+        - name: page
+          description: "ページ番号"
+          in: query
+          required: false
+          schema: { type: integer }
+        - name: type
+          description: "`all`を指定すると全て取得"
+          in: query
+          required: false
+          schema: { type: string }
+        - name: delivery_office_id
+          description: "依頼者IDで絞り込む"
+          in: query
+          required: false
+          schema: { type: string }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+          example:
+
+  /delivery-office-task-review/show/{review_id}:
+    get:
+      summary: "取得"
+      tags: ["delivery_office_task_review"]
+      parameters:
+        - $ref: "#/components/parameters/api_auth"
+        - name: review_id
+          description: "レビューID"
+          in: path
+          required: false
+          schema: { type: integer }
+        - name: driver_task_id
+          description: "稼働ID"
+          in: query
+          required: false
+          schema: { type: integer }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+          example:
+
+  # --稼働依頼--
+  /driver-task-list:
+    get:
+      tags: ["task"]
+      summary: "一覧取得"
+      parameters:
+        - $ref: "#/components/parameters/api_auth"
+        - name: page
+          description: "ページ番号"
+          in: query
+          required: false
+          schema: { type: integer }
+        - name: keyword
+          description: "検索ワード"
+          in: query
+          required: false
+          schema: { type: string }
+        - name: from_task_date
+          description: "タスク日付 以上"
+          in: query
+          required: false
+          schema: { type: string }
+        - name: to_task_date
+          description: "タスク日付 以下"
+          in: query
+          required: false
+          schema: { type: string }
+        - name: task_status_id
+          description: "タスクステータス"
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: integer
+        - name: from_created_at
+          description: "作成日 以上"
+          in: query
+          required: false
+          schema: { type: string }
+        - name: to_created_at
+          description: "作成日 以下"
+          in: query
+          required: false
+          schema: { type: string }
+        - name: from_updated_at
+          description: "更新日 以上"
+          in: query
+          required: false
+          schema: { type: string }
+        - name: to_updated_at
+          description: "更新日 以下"
+          in: query
+          required: false
+          schema: { type: string }
+        - name: orderby
+          description: "並び替え"
+          in: query
+          required: false
+          schema: { type: string }
+      responses:
+        "200":
+          $ref: "#/components/responses/200_R"
+          example:
+
+  /driver-task/store:
+    post:
+      tags: ["task"]
+      summary: "作成"
+      parameters:
+        - $ref: "#/components/parameters/api_auth"
+      requestBody:
+        description: 条件によってバリデーションルールが変更される。
+        content:
+          application/json:
+            schema:
+              properties:
+                task_date:
+                  type: string
+                driver_id:
+                  type: integer
+                rough_quantity:
+                  type: integer
+                delivery_route:
+                  type: string
+                task_memo:
+                  type: string
+                task_delivery_company_id:
+                  type: integer
+                task_delivery_company_name:
+                  type: string
+                task_delivery_office_name:
+                  type: string
+                task_email:
+                  type: string
+                task_tel:
+                  type: string
+                task_post_code1:
+                  type: string
+                task_post_code2:
+                  type: string
+                task_addr1_id:
+                  type: integer
+                task_addr2:
+                  type: string
+                task_addr3:
+                  type: string
+                task_addr4:
+                  type: string
+                pickup_addr_id:
+                  type: integer
+                  description: "登録していない集荷先の場合は`is_new`を指定"
+                is_create_pickup_addr:
+                  type: boolean
+                payment_method_id:
+                  type: string
+                system_price:
+                  type: integer
+                emergency_price:
+                  type: integer
+                tax:
+                  type: integer
+                total_price:
+                  type: integer
+      responses:
+        200:
+          $ref: "#/components/responses/200_W"
+
+  /driver-task/show/{task_id}:
+    get:
+      tags: ["task"]
+      summary: "取得"
+      parameters:
+        - $ref: "#/components/parameters/api_auth"
+        - name: task_id
+          description: "稼働ID"
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+          example:
+
+  /driver-task/update/{task_id}:
+    post:
+      tags: ["task"]
+      summary: "更新"
+      parameters:
+        - $ref: "#/components/parameters/api_auth"
+        - name: task_id
+          description: "稼働ID"
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        description: 条件によってバリデーションルールが変更される。
+        content:
+          application/json:
+            schema:
+              properties:
+                type:
+                  type: string
+                  description: "編集タイプ complete(完了) cancel(キャンセル) failure(不履行) payment_method(支払い方法変更) それぞれを値に指定"
+                payment_method_id:
+                  type: string
+      responses:
+        200:
+          $ref: "#/components/responses/200_W"
+
+  /driver-task-plan-allow-driver/check:
+    get:
+      tags: ["task"]
+      summary: "指定した稼働依頼プランが、指定したドライバーで稼働できるか判定"
+      parameters:
+        - $ref: "#/components/parameters/api_auth"
+        - name: driver_task_plan_id
+          description: "稼働依頼ID"
+          in: query
+          required: true
+          schema: { type: integer }
+        - name: driver_id
+          description: "ドライバーID"
+          in: query
+          required: true
+          schema: { type: integer }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+
+  /driver-task/calc-basic-price:
+    get:
+      tags: ["task"]
+      summary: "料金取得"
+      parameters:
+        - $ref: "#/components/parameters/api_auth"
+        - name: task_date
+          description: "稼働日 yyyy-mm-dd"
+          in: query
+          required: true
+          schema: { type: string }
+        - name: freight_cost
+          description: "ドライバー運賃"
+          in: query
+          required: true
+          schema: { type: integer }
+        - name: driver_task_plan_id
+          description: "稼働依頼プランID"
+          in: query
+          required: true
+          schema: { type: integer }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  # --許可権限--
+  /driver-task-permission/show/{task_id}:
+    get:
+      summary: 取得
+      description: "稼働依頼に関係する操作権限"
+      tags: ["permission"]
+      parameters:
+        - $ref: "#/components/parameters/api_auth"
+        - name: task_id
+          description: "稼働ID"
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  # --UI--
+  /driver-task-ui/show/{task_id}:
+    get:
+      summary: 取得
+      description: "稼働依頼に関係するUI"
+      tags: ["permission"]
+      parameters:
+        - $ref: "#/components/parameters/api_auth"
+        - name: task_id
+          description: "稼働ID"
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  # --集荷先住所--
+  /delivery-pickup-addr:
+    get:
+      tags: ["delivery_pickup_addr"]
+      summary: "一覧取得"
+      parameters:
+        - $ref: "#/components/parameters/api_auth"
+        - name: keyword
+          description: "検索ワード"
+          in: query
+          required: false
+          schema: { type: integer }
+        - name: type
+          description: "タイプ form_new で新しい集荷先のデータ付与"
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+
+  /delivery-pickup-addr/store:
+    post:
+      tags: ["delivery_pickup_addr"]
+      summary: "作成"
+      parameters:
+        - $ref: "#/components/parameters/api_auth"
+      requestBody:
+        description: 条件によってバリデーションルールが変更される。
+        content:
+          application/json:
+            schema:
+              properties:
+                delivery_company_id:
+                  type: integer
+                delivery_company_name:
+                  type: string
+                delivery_office_name:
+                  type: string
+                email:
+                  type: string
+                tel:
+                  type: string
+                post_code1:
+                  type: string
+                post_code2:
+                  type: string
+                addr1_id:
+                  type: integer
+                addr2:
+                  type: string
+                addr3:
+                  type: string
+                addr4:
+                  type: string
+      responses:
+        200:
+          $ref: "#/components/responses/200_W"
+
+  /delivery-pickup-addr/show/{pickup_id}:
+    get:
+      tags: ["delivery_pickup_addr"]
+      summary: "取得"
+      parameters:
+        - $ref: "#/components/parameters/api_auth"
+        - name: pickup_id
+          description: "集荷先ID"
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        200:
+          $ref: "#/components/responses/200_R"
+          example:
+
+  /delivery-pickup-addr/update/{pickup_id}:
+    post:
+      tags: ["delivery_pickup_addr"]
+      summary: "更新"
+      parameters:
+        - $ref: "#/components/parameters/api_auth"
+        - name: pickup_id
+          description: "集荷先ID"
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        description: 条件によってバリデーションルールが変更される。
+        content:
+          application/json:
+            schema:
+              properties:
+                delivery_company_id:
+                  type: integer
+                delivery_company_name:
+                  type: string
+                delivery_office_name:
+                  type: string
+                email:
+                  type: string
+                tel:
+                  type: string
+                post_code1:
+                  type: string
+                post_code2:
+                  type: string
+                addr1_id:
+                  type: integer
+                addr2:
+                  type: string
+                addr3:
+                  type: string
+                addr4:
+                  type: string
+      responses:
+        200:
+          $ref: "#/components/responses/200_W"
+
+  /delivery-pickup-addr/destroy/{pickup_id}:
+    post:
+      tags: ["delivery_pickup_addr"]
+      summary: "削除"
+      parameters:
+        - $ref: "#/components/parameters/api_auth"
+        - name: pickup_id
+          description: "集荷先ID"
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        200:
+          $ref: "#/components/responses/200_W"
+
+  # --領収書PDF--
+  /pdf-receipt/store:
+    post:
+      tags: ["pdf_receipt"]
+      summary: "作成"
+      parameters:
+        - $ref: "#/components/parameters/api_auth"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - type
+                - driver_task_id
+              properties:
+                type:
+                  description: "html_preview(HTMLプレビュー), pdf_preview(PDFプレビュー), pdf_download を指定する"
+                  type: string
+                driver_task_id:
+                  type: integer
+      responses:
+        200:
+          $ref: "#/components/responses/200_PDF"
+
+  # --登録申請--
+  /register-request/store:
+    post:
+      tags: ["register_request"]
+      summary: "作成"
+      requestBody:
+        description: 条件によってバリデーションルールが変更される。
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                manager_name_sei:
+                  type: string
+                manager_name_mei:
+                  type: string
+                manager_name_sei_kana:
+                  type: string
+                manager_name_mei_kana:
+                  type: string
+                email:
+                  type: string
+                delivery_company_id:
+                  type: integer
+                delivery_company_name:
+                  type: string
+                post_code1:
+                  type: string
+                post_code2:
+                  type: string
+                addr1_id:
+                  type: integer
+                addr2:
+                  type: string
+                addr3:
+                  type: string
+                addr4:
+                  type: string
+                manager_tel:
+                  type: string
+                message:
+                  type: string
+                terms_service:
+                  type: boolean
+      responses:
+        200:
+          $ref: "#/components/responses/200_W"
+
+  /register-request/update:
+    post:
+      tags: ["register_request"]
+      summary: "更新"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - email
+                - password
+                - register_request_token
+              properties:
+                register_request_token:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        200:
+          $ref: "#/components/responses/200_W"
+
+components:
+  parameters:
+    api_auth:
+      in: header
+      name: Authorization
+      schema:
+        type: string
+      description: Authorization Bearer token
+
+  responses:
+    200_R:
+      description: "Success Read"
+      content:
+        application/json:
+          schema:
+            properties:
+              status: { type: boolean }
+              data: { type: object }
+    200_W:
+      description: "Success Write"
+      content:
+        application/json:
+          schema:
+            properties:
+              status: { type: boolean }
+              message: { type: string }
+
+    200_PDF:
+      description: "Success PDF"
+      content:
+        application/pdf:
+          schema:
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

@@ -1,0 +1,22 @@
+.bl_noData {
+    max-width: map-get($ary_width, xl);
+    margin: auto;
+    margin-top: 5.5rem;
+    margin-bottom: 4rem;
+    background: #fff;
+    border: 1px solid #999899;
+    box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.2);
+    @include media(m) {
+        margin-top: 7rem;
+    }
+    .bl_noData_inner {
+        position: relative;
+        width: 90%;
+        margin: auto;
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+        p {
+            font-weight: bold;
+        }
+    }
+}

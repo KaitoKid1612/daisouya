@@ -1,0 +1,11 @@
+{
+    "/js/app.js": "/js/app.js",
+    "/js/app_driver.js": "/js/app_driver.js",
+    "/js/app_admin.js": "/js/app_admin.js",
+    "/js/app_delivery_office.js": "/js/app_delivery_office.js",
+    "/js/typescript.js": "/js/typescript.js",
+    "/css/app_admin.css": "/css/app_admin.css",
+    "/css/app_driver.css": "/css/app_driver.css",
+    "/css/app_delivery_office.css": "/css/app_delivery_office.css",
+    "/css/app_guest.css": "/css/app_guest.css"
+}

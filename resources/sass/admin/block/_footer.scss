@@ -1,0 +1,75 @@
+.bl_footer {
+    margin-top: auto;
+    .bl_footer_inner {
+        background: #fff;
+        .bl_footer_inner_menu {
+            margin: 0 auto;
+            padding: 0.8rem 1rem 0 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            .bl_footer_inner_menu_img {
+                width: 100%;
+                margin: auto 0;
+                @include media(m) {
+                    width: 6.5rem;
+                    margin: auto 2rem auto 0;
+                }
+                a {
+                    display: block;
+                    text-align: center;
+                    margin-bottom: 1rem;
+                    @include media(m) {
+                        margin: 0;
+                    }
+                    img {
+                        width: 6.5rem;
+                        @include media(m) {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+            ul {
+                display: flex;
+                align-items: center;
+                li {
+                    margin: 0 0.4rem 0.4rem 0;
+                    a {
+                        display: inline-block;
+                        position: relative;
+                        color: #666666;
+                        padding-left: 1.5rem;
+                        font-size: 0.9rem;
+                        &:hover {
+                            color: $color_main;
+                            &::before {
+                                background: $color_main;
+                            }
+                        }
+                        &::before {
+                            content: "";
+                            display: inline-block;
+                            width: 0.5rem;
+                            height: 1px;
+                            position: absolute;
+                            top: 50%;
+                            left: 1rem;
+                            transform: translate(-50%, -50%);
+                            background: #666666;
+                        }
+                    }
+                }
+            }
+        }
+        .bl_footer_inner_copyright {
+            padding: 1rem 0.5rem;
+            p {
+                text-align: center;
+                color: #666666;
+                font-size: 0.6rem;
+            }
+        }
+    }
+}

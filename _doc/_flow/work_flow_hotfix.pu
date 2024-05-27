@@ -1,0 +1,30 @@
+@startuml work_flow_hotfix
+title 保守作業フロー
+|engineer| エンジニア
+|client| クライアント
+
+|engineer|
+start
+floating note: クライアントと連絡がつかない時は、PMが判断する。
+if (早急に対応が必要) is (Yes) then
+    :本番 メンテナンスモード;
+    :STG 反映;
+    :本番 反映;
+    :本番 メンテナンスモード 解除;
+    :事後報告;
+stop
+else (No)
+    |engineer|
+    :STG 反映;
+    |client|
+    :確認;
+    |engineer|
+    :本番 メンテナンスモード;
+    :本番 反映;
+    |client|
+    :確認;
+    |engineer|
+    :本番 メンテナンスモード 解除;
+stop
+endif
+@enduml

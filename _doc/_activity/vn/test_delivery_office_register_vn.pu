@@ -1,0 +1,59 @@
+@startuml
+title 依頼者の登録図(Người yêu cầu đăng ký)
+|delivery_office| 依頼者(Người yêu cầu)
+|admin| 管理者(Quản trị)
+
+|delivery_office|
+start
+:依頼者 登録申請 (Yêu cầu đăng ký tài khoản);
+|admin|
+:Alert "新しい依頼者の登録申請があります。(Thống báo có yêu cầu đăng ký mới)";
+note right: メール通知
+if(依頼の処理) is (不可) then
+ |delivery_office|
+  :Alert "申し込みは不可されました(Thông báo bị từ chối)";
+  note left: メール通知
+  stop
+else(許可)
+  |delivery_office|
+  :Alert "申し込みは許可されました(Thông báo được chấp nhận)";
+  note left: メール通知
+  :メールからURLにアクセスして、パスワード設定;
+  :会員登録完了となります。;
+  stop
+endif
+@enduml
+
+
+
+
+title 依頼者の登録図(Người yêu cầu đăng ký)
+|delivery_office| 依頼者(Người yêu cầu)
+|admin| 管理者(Quản trị)
+
+|delivery_office|
+start
+:依頼者 登録申請 (Yêu cầu đăng ký tài khoản);
+|admin|
+:Alert "新しい依頼者の登録申請があります。(Thống báo có yêu cầu đăng ký mới)";
+note right: メール通知
+while  (依頼の処理) is (許可)
+
+  :Gởi thông báo cho 依頼者;
+  if(kiểm thử nội dung thư) is (nothing) then
+    |delivery_office|
+    :Alert "申し込みは許可されました(Thông báo được chấp nhận)";
+    note left: メール通知
+    :メールからURLにアクセスして、パスワード設定;
+    :会員登録完了となります。;
+    stop
+  else(yes)
+    |admin|
+    :Xem nội dung thư tại mailtrap;
+    :Thay đổi nội dung thư;
+  endif
+endwhile (不可)
+|delivery_office|
+:Alert "申し込みは不可されました(Thông báo bị từ chối)";
+note left: メール通知
+stop

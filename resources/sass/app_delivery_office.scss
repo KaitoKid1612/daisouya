@@ -1,0 +1,56 @@
+@import "common/init/normalize";
+@import "common/init/reset";
+@import "delivery_office/init/init";
+@import "common/mixin/variable";
+@import "common/mixin/media";
+@import "common/utility/font";
+
+body {
+    margin: 0;
+    display: flex;
+    flex-flow: column;
+    min-height: 100vh;
+    background-image: url(/images/common/bg.png);
+    background-repeat: repeat-y;
+    background-size: 100% auto;
+    @include z(bg);
+    width: 100%;
+}
+
+main {
+    margin-bottom: 2em;
+}
+
+.el_error_msg {
+    color: #ff0000;
+    margin: 0.2rem 0;
+    font-weight: bold;
+    width: 100%;
+}
+.el_textAlign_center {
+    text-align: center;
+}
+
+@import "common/pagenate";
+@import "common/overlay";
+@import "common/component/form";
+@import "common/component/calendar";
+@import "common/component/loading";
+@import "common/block/other";
+
+@import "delivery_office/block/header";
+@import "delivery_office/block/footer";
+@import "delivery_office/block/msg";
+
+@import "delivery_office/block/login";
+@import "delivery_office/block/dashboard";
+@import "delivery_office/block/driver";
+@import "delivery_office/block/driver_task";
+@import "delivery_office/block/driver_task_template";
+@import "delivery_office/block/delivery_pickup_addr";
+@import "delivery_office/block/driver_task_review";
+@import "delivery_office/block/delivery_office_task_review";
+@import "delivery_office/block/delivery_office_account";
+@import "delivery_office/block/payment";
+@import "delivery_office/block/register_request";
+@import "delivery_office/block/pdf_invoice";

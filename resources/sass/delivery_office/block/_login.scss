@@ -1,0 +1,61 @@
+.bl_login {
+    max-width: map-get($ary_width, s);
+    margin: 5rem auto 4rem auto;
+    background: #fff;
+    border: 1px solid #999899;
+    box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.2);
+    .bl_login_inner {
+        padding: 3.2rem;
+        h2 {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        form {
+            .bl_login_inner_form_item {
+                margin-bottom: 2rem;
+                label {
+                    display: block;
+                    font-size: 1.3rem;
+                    text-align: center;
+                    margin-bottom: 0.6rem;
+                }
+                input {
+                    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.5) inset;
+                    display: block;
+                    width: 100%;
+                    padding: 0.5rem 1rem;
+                    border-radius: 0.3rem;
+                    border: 1px solid $color_line;
+                }
+            }
+            .bl_login_inner_form_submit {
+                text-align: center;
+                margin-bottom: 2rem;
+                input[type="submit"] {
+                    background: $color_main;
+                    color: #fff;
+                    font-size: 1.2rem;
+                    padding: 0.6rem 1.2rem;
+                    border-radius: 0.2rem;
+                    &:hover {
+                        opacity: 0.8;
+                    }
+                }
+            }
+        }
+
+        .bl_login_inner_link {
+            .bl_login_inner_link_item {
+                text-align: center;
+                margin-bottom: 1rem;
+                a {
+                    color: $color_main;
+                    text-decoration: underline;
+                    &:hover {
+                        opacity: 0.8;
+                    }
+                }
+            }
+        }
+    }
+}

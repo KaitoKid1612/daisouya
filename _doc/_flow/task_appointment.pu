@@ -1,0 +1,25 @@
+@startuml task
+left to right direction
+
+title 稼働依頼(ドライバー指名)
+
+
+actor "依頼者" as delivery_office
+rectangle "ドライバー詳細" as driver_show
+rectangle calendar [
+    カレンダー
+    （ドライバーの稼働可能日）
+]
+rectangle form [
+    フォーム
+    ---
+    今までの稼働依頼から日付を除いたページ
+]
+rectangle "完了" as done
+
+delivery_office --> driver_show
+driver_show --> calendar : 稼働依頼ボタン
+calendar --> form : 日付選択
+form --> done
+
+@enduml

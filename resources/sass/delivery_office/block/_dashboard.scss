@@ -1,0 +1,34 @@
+.bl_dashboard {
+    max-width: map-get($ary_width, s);
+    margin: 3rem auto 4rem auto;
+    background: #fff;
+    border: 1px solid #999899;
+    box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.2);
+    @include media(m) {
+        margin: 4rem auto 4rem auto;
+    }
+    .bl_dashboard_inner {
+        padding: 3.2rem;
+        @include media(m) {
+            padding: 3.2rem;
+        }
+        .bl_dashboard_inner_link {
+            margin-bottom: 1.5rem;
+            a {
+                display: block;
+                border: 1px solid $color_line;
+                border-radius: 0.5rem;
+                padding: 1.2rem 1rem;
+                font-size: 1.2rem;
+                text-align: center;
+                font-weight: bold;
+                letter-spacing: 2px;
+                box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.2);
+                &:hover {
+                    background: $color_main;
+                    color: #fff;
+                }
+            }
+        }
+    }
+}

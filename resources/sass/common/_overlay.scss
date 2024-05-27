@@ -1,0 +1,23 @@
+.bl_overlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    transition: all 0.2s ease;
+    visibility: hidden;
+    opacity: 0;
+    @include z(overlay);
+    &.active {
+        visibility: visible;
+        opacity: 1;
+    }
+}
+
+.js_scroll_stop {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+}

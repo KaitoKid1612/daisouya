@@ -1,0 +1,43 @@
+/* 読み込み中 くるくるアニメーション */
+
+.js_loading {
+    opacity: 0;
+    pointer-events: none;
+    transition: all 100ms 0s ease;
+    &.active {
+        background-color: black;
+        opacity: 0.6;
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        top: 0px;
+        left: 0px;
+        position: fixed;
+        display: block;
+        pointer-events: auto;
+        @include z("loading");
+    }
+    .js_loading_circle {
+        width: 7rem;
+        height: 7rem;
+        border-radius: 150px;
+        border: 1rem solid #fff;
+        border-top-color: rgba(0, 0, 0, 0.3);
+        box-sizing: border-box;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        animation: circle 1s linear infinite;
+        -webkit-animation: circle 1s linear infinite;
+        @keyframes circle {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+    }
+}

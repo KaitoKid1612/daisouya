@@ -1,0 +1,377 @@
+.c_form_flex {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+/* text形式のForm用 */
+.c_form_item {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    label {
+        display: block;
+        font-size: 1.05rem;
+        font-weight: bold;
+        margin-bottom: 0.4rem;
+        width: 100%;
+    }
+    input[type="text"],
+    input[type="number"],
+    input[type="password"],
+    input[type="date"] {
+        width: 100%;
+        border: 1px solid $color_line;
+        box-shadow: 0px 0px 6px 0px rgb(0, 0, 0, 0.2);
+        border-radius: 0.3rem;
+        padding: 0.4rem 0.7rem;
+        font-size: 1rem;
+        box-sizing: border-box;
+    }
+    input.el_readOnly {
+        background: #e7e7e7;
+        pointer-events: none;
+    }
+    textarea {
+        border: 1px solid $color_line;
+        box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2) inset;
+        width: 100%;
+        height: 8rem;
+        padding: 0.6rem 1rem;
+        line-height: 1.6;
+        box-sizing: border-box;
+        &.el_readOnly {
+            background: #e7e7e7;
+            pointer-events: none;
+        }
+    }
+
+    & > span {
+        margin: 0 0.5rem;
+    }
+}
+
+/* select用 */
+.c_form_select {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    position: relative;
+    width: 100%;
+    label {
+        display: block;
+        font-size: 1.05rem;
+        font-weight: bold;
+        margin-bottom: 0.4rem;
+        width: 100%;
+    }
+    &::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        transform: translate(0, -20%);
+        right: 0.8rem;
+        width: 0;
+        height: 0;
+        border: none;
+        border-top: 8px solid #000;
+        border-right: 5px solid transparent;
+        border-left: 5px solid transparent;
+    }
+    select {
+        border: 1px solid #8ea3a9;
+        box-shadow: 0px 0px 6px 0px rgb(0 0 0 / 20%);
+        border-radius: 0.3rem;
+        font-size: 1rem;
+        padding: 0.4rem 0.4rem 0.4rem 0.4rem;
+        box-sizing: border-box;
+        position: relative;
+        width: 100%;
+        &.el_readOnly {
+            background: #e7e7e7;
+            pointer-events: none;
+        }
+    }
+}
+
+/* チェックボックス用 */
+.c_form_checkbox {
+    input[type="checkbox"] {
+        display: none;
+        &:checked + label::after {
+            opacity: 1;
+        }
+    }
+    label {
+        display: block;
+        background: transparent;
+        box-sizing: border-box;
+        cursor: pointer;
+        display: inline-block;
+        padding: 8px 0 8px 30px;
+        position: relative;
+        width: auto;
+        font-size: 0.8rem;
+        word-break: break-word;
+        margin-bottom: 0;
+        &::before {
+            background: #fff;
+            border: 1px solid #b3b3b3;
+            content: "";
+            display: block;
+            position: absolute;
+            height: 16px;
+            left: 5px;
+            width: 16px;
+            top: 50%;
+            transform: translate(0px, -50%);
+        }
+        &::after {
+            border-right: 3px solid #ed7a9c;
+            border-bottom: 3px solid #ed7a9c;
+            content: "";
+            display: block;
+            height: 9px;
+            left: 10px;
+            margin-top: -7px;
+            opacity: 0;
+            position: absolute;
+            top: 50%;
+            transform: rotate(45deg);
+            width: 5px;
+        }
+    }
+}
+
+/* ラジオボタン用 */
+.c_form_radio {
+    input[type="radio"] {
+        display: none;
+        &:checked + label::after {
+            opacity: 1;
+        }
+    }
+    label {
+        display: block;
+        background: transparent;
+        box-sizing: border-box;
+        cursor: pointer;
+        display: inline-block;
+        padding: 8px 0 8px 30px;
+        position: relative;
+        width: auto;
+        font-size: 0.8rem;
+        word-break: break-word;
+        margin-bottom: 0;
+        &::before {
+            background: #fff;
+            border: 1px solid #b3b3b3;
+            border-radius: 100%;
+            content: "";
+            display: block;
+            position: absolute;
+            height: 16px;
+            left: 5px;
+            width: 16px;
+            top: 50%;
+            transform: translate(0px, -50%);
+        }
+        &::after {
+            border-right: 3px solid #ed7a9c;
+            border-bottom: 3px solid #ed7a9c;
+            content: "";
+            display: block;
+            height: 9px;
+            left: 10px;
+            margin-top: -7px;
+            opacity: 0;
+            position: absolute;
+            top: 50%;
+            transform: rotate(45deg);
+            width: 5px;
+        }
+    }
+}
+
+/* file用 */
+.c_form_file {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    label {
+        display: block;
+        font-size: 1.05rem;
+        font-weight: bold;
+        margin-bottom: 0.4rem;
+        width: 100%;
+    }
+    input[type="file"] {
+        width: 100%;
+    }
+    img {
+        max-width: 100%;
+        max-height: 100px;
+        object-fit: contain;
+    }
+}
+
+/* サブミット用 */
+.c_form_submit {
+    input[type="submit"] {
+        color: #fff;
+        background: $color_main;
+        border-radius: 0.3rem;
+        box-shadow: 0px 0px 4px 0px rgb(0, 0, 0, 20%);
+        font-size: 1.2rem;
+        padding: 0.6rem 1rem;
+        box-sizing: border-box;
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+}
+input[type="submit"].c_submit {
+    color: #fff;
+    background: $color_main;
+    border-radius: 0.3rem;
+    box-shadow: 0px 0px 4px 0px rgb(0, 0, 0, 20%);
+    font-size: 1.1rem;
+    padding: 0.6rem;
+    box-sizing: border-box;
+    &:hover {
+        opacity: 0.7rem;
+    }
+}
+
+input[type="submit"].c_submit2 {
+    background: #fff;
+    color: $color_main;
+    border-radius: 0.3rem;
+    box-shadow: 0px 0px 4px 0px rgb(0, 0, 0, 20%);
+    font-size: 1.1rem;
+    padding: 0.6rem;
+    box-sizing: border-box;
+    border: 1px solid $color_main;
+    &:hover {
+        color: #fff;
+        background: $color_main;
+        border: 1px solid transparent;
+    }
+}
+
+.c_button_box {
+    button {
+        color: #fff;
+        background: $color_main;
+        border-radius: 0.3rem;
+        box-shadow: 0px 0px 4px 0px rgb(0, 0, 0, 20%);
+        font-size: 1.1rem;
+        padding: 0.6rem;
+        box-sizing: border-box;
+    }
+}
+
+.c_reset_btn_box {
+    button {
+        color: #fff;
+        background: #000;
+        border-radius: 0.3rem;
+        box-shadow: 0px 0px 4px 0px rgb(0, 0, 0, 20%);
+        font-size: 1.1rem;
+        padding: 0.6rem;
+        box-sizing: border-box;
+    }
+}
+
+a.c_link {
+    color: #fff;
+    background: $color_main;
+    border-radius: 0.3rem;
+    box-shadow: 0px 0px 4px 0px rgb(0 0 0 / 20%);
+    font-size: 1.1rem;
+    padding: 0.6rem;
+    display: inline-block;
+    box-sizing: border-box;
+    &:hover {
+        opacity: 0.8;
+    }
+}
+
+a.c_link2 {
+    color: #fff;
+    background: $color_main;
+    border-radius: 0.3rem;
+    box-shadow: 0px 0px 4px 0px rgb(0 0 0 / 20%);
+    font-size: 1.1rem;
+    padding: 0.6rem;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+    display: inline-block;
+    &:hover {
+        background: #fff;
+        color: $color_main;
+        border: 1px solid $color_main;
+    }
+}
+
+a.c_btn,
+button.c_btn,
+input[type="submit"].c_btn {
+    color: #fff;
+    background: $color_main;
+    border-radius: 0.3rem;
+    box-shadow: 0px 0px 4px 0px rgb(0 0 0 / 20%);
+    font-size: 1.1rem;
+    padding: 0.6rem;
+    display: inline-block;
+    box-sizing: border-box;
+    &.c_btn_bgRed {
+        background: red;
+    }
+    &:hover {
+        opacity: 0.8;
+    }
+}
+
+a.c_normal_link {
+    color: #0000ee;
+    text-decoration: underline;
+    &:hover {
+        opacity: 0.6;
+    }
+}
+
+// Quillエディタ
+.c_form_editor {
+    label {
+        display: block;
+        font-size: 1.05rem;
+        font-weight: bold;
+        margin-bottom: 0.4rem;
+        width: 100%;
+    }
+}
+
+// 配送会社IDが選択されている場合は、配送会社名の入力を無効化。
+// 配送会社IDが「所属なし」の場合は、配送会社名の入力を有効化。
+.js_form_delivery_company_name {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    z-index: -9999;
+    pointer-events: none;
+    &.js_active {
+        opacity: 1;
+        visibility: visible;
+        position: relative;
+        z-index: initial;
+        pointer-events: auto;
+    }
+}
+
+// サブミットの無効化などに使う。
+.js_eventNone {
+    pointer-events: none;
+    opacity: 0.5;
+  }

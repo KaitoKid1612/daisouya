@@ -1,0 +1,48 @@
+.bl_pagenate {
+    .bl_pagenate_ul {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        li {
+            a {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-wrap: wrap;
+                width: 1.8rem;
+                height: 1.8rem;
+                font-size: 1rem;
+                color: $color_main;
+                &:hover {
+                    background: #3c8dbc70;
+                    color: #fff;
+                }
+                @include media(m) {
+                    width: 2.5rem;
+                    height: 2.5rem;
+                    font-size: 1.3rem;
+                }
+            }
+            span {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-wrap: wrap;
+                width: 1.8rem;
+                height: 1.8rem;
+                font-size: 1rem;
+                color: #ccc;
+                &.el_active {
+                    background: $color_main;
+                    color: #fff;
+                }
+                @include media(m) {
+                    width: 2.5rem;
+                    height: 2.5rem;
+                    font-size: 1.3rem;
+                }
+            }
+        }
+    }
+}

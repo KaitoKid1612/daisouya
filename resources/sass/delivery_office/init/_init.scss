@@ -1,0 +1,18 @@
+/* フォント 変数定義 */
+$font_main: YuGothic,'Yu Gothic','ヒラギノ角ゴシック','Hiragino Sans','Futura',sans-serif;
+// $font_sub: "'Futura','メイリオ', Meiryo,'Hiragino Kaku Gothic ProN','ヒラギノ角ゴ ProN W3',sans-serif";
+
+/* 色 変数定義 */
+// $color_base: "$color_main"; //基調
+$color_main: #3c8dbc; //メインカラー
+// $color_bg: #fff; //背景
+$color_line: #8ea3a9; //背景
+// $color_subbg: "#eee"; //サブ背景
+// $color_text: "#000"; //メインテキスト
+// $color_subtext: "#fff"; //サブテキスト
+$color_link: #1a0dab;
+
+html {
+  font-size: 16px;
+  font-family: $font_main;
+}

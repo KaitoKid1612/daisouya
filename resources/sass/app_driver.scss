@@ -1,0 +1,53 @@
+@import "common/init/normalize";
+@import "common/init/reset";
+@import "driver/init/init";
+@import "common/mixin/variable";
+@import "common/mixin/media";
+@import "common/utility/font";
+
+body {
+    margin: 0;
+    display: flex;
+    flex-flow: column;
+    min-height: 100vh;
+    background-image: url(/images/common/bg.png);
+    background-repeat: repeat-y;
+    background-size: 100% auto;
+    @include z(bg);
+    width: 100%;
+}
+
+main {
+    margin-bottom: 2em;
+}
+
+.el_error_msg {
+    color: #ff0000;
+    margin: 0.2rem 0;
+    font-weight: bold;
+    width: 100%;
+}
+.el_textAlign_center {
+    text-align: center;
+}
+@import "common/pagenate";
+@import "common/overlay";
+@import "common/component/form";
+@import "common/component/loading";
+@import "common/block/other";
+
+@import "common/component/calendar";
+
+@import "driver/block/header";
+@import "driver/block/footer";
+@import "driver/block/msg";
+
+@import "driver/block/login";
+@import "driver/block/dashboard";
+@import "driver/block/driver";
+@import "driver/block/driver_register_delivery_office_memo";
+@import "driver/block/driver_task";
+@import "driver/block/driver_task_review";
+@import "driver/block/delivery_office_task_review";
+@import "driver/block/driver_schedule";
+@import "driver/block/register_request";

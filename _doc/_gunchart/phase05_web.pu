@@ -1,0 +1,16 @@
+@startgantt phase05_web
+language ja
+title フェーズ5 WEBを先にデプロイ
+
+Project starts 2023-09-04
+[ヒアリング] starts 2023-09-04 and ends 2023-09-11
+[見積もり] starts 2023-09-08 and ends 2023-09-12
+[設計] starts 2023-09-11 and ends 2023-09-15
+[デザイン] starts 2023-09-13 and ends 2023-09-22
+[WEB実装] starts 2023-09-15 and ends 2023-10-05
+[WEBテスト] starts 2023-10-05 and ends 2023-10-15
+[WEBデプロイ] starts 2023-10-15 and ends 2023-10-18
+[アプリ実装] starts 2023-10-10 and ends 2023-10-25
+[アプリテスト] starts 2023-10-25 and ends 2023-11-05
+[アプリデプロイ] starts 2023-11-5 and ends 2023-11-08
+@endgantt

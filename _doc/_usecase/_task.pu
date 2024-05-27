@@ -1,0 +1,16 @@
+@startuml task
+title ユースケース
+left to right direction
+actor "ドライバー" as Driver
+actor "依頼者" as DeliveryOffice
+actor "管理者" as Admin 
+
+rectangle "システム" as System {
+    usecase "稼働依頼" as task
+}
+
+System <-- Admin : システムの全体を管理
+Driver <--> task : 稼働を受諾
+DeliveryOffice --> task : 稼働を依頼する
+
+@enduml
