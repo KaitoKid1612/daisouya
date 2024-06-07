@@ -29,7 +29,7 @@
 # クローン
 git clone URL
 
-# composer更新 
+# composer更新
 composer update
 
 # エラー「Please provide a valid cache path.」
